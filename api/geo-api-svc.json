@@ -2,7 +2,7 @@
   "kind": "Service",
   "apiVersion": "v1",
   "metadata": {
-    "name": "geo-api-svc"
+    "name": "tripapi"
   },
   "spec": {
     "ports": [{
