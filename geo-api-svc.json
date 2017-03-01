@@ -1,0 +1,17 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "geo-api-svc"
+  },
+  "spec": {
+    "ports": [{
+      "port": 8099,
+      "targetPort": 8099
+    }],
+    "selector": {
+      "api": "geo-api"
+    },
+    "type": "NodePort"
+  }
+}

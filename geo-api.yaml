@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: geo-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        api: geo-api
+    spec:
+      containers:
+      - name: geo-api
+        image: sashaz/geoapi:latest
+        ports:
+        - containerPort: 8099
+        args:
+        - node
+        - server.js

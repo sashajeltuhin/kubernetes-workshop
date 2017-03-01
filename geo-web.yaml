@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: geo-web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: geo-web
+    spec:
+      containers:
+      - name: geo-web
+        image: sashaz/geoweb:latest
+        ports:
+        - containerPort: 80

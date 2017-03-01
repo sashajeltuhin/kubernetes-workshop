@@ -1,0 +1,17 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "osrm-api"
+  },
+  "spec": {
+    "ports": [{
+      "port": 5000,
+      "targetPort": 5000
+    }],
+    "selector": {
+      "api": "osrm-api"
+    },
+    "type": "NodePort"
+  }
+}
