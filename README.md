@@ -24,7 +24,7 @@ kubectl apply -f ingress.yaml
 
 Test API:
 curl <Ip of worker1>:<NodePort of geo-api-svc>/api/testMap/32.983312,-84.343748%3B33.983311,-84.333732
-138.197.148.37:32447
+
 
 Test website:
 Add record to /etc/hosts:
