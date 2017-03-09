@@ -8,5 +8,5 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: tripweb
+          serviceName: geoweb
           servicePort: 80

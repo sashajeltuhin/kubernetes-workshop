@@ -2,7 +2,7 @@
   "kind": "Service",
   "apiVersion": "v1",
   "metadata": {
-    "name": "tripweb"
+    "name": "geoweb"
   },
   "spec": {
     "ports": [{
@@ -10,7 +10,7 @@
       "targetPort": 80
     }],
     "selector": {
-      "app": "geo-web"
+      "app": "geoweb"
     },
     "type": "NodePort"
   }

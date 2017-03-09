@@ -10,7 +10,7 @@ spec:
         api: osrm-api
     spec:
       containers:
-      - name: osrm-api-ga
+      - name: osrm-api
         image: cartography/osrm-backend-docker:latest
         ports:
         - containerPort: 5000
