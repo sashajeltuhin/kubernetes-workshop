@@ -35,7 +35,7 @@ After the provisionioning is complete, ssh into the bootstrap node and navigate 
 Run `chmod 600 kubernetes-workshop/ssh/cluster.pem`
 
 To standup a Kubernetes cluster, we use a set of ansible scripts driven by a plan file. The file is generated for you during the provisioning process.
-* Open `/ket/kismatic-cluster.yaml for editing.
+* Open `/ket/kismatic-cluster.yaml` for editing.
 * Inspect the generated content and change the path to the ssh file to `/ket/kubernetes-workshop/ssh/cluster.pem`
 * Save and close the plan file
 * Run the following command:
