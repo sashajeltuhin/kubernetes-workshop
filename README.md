@@ -20,7 +20,7 @@ On Windows:
   * download GitBash from [here](https://git-scm.com/downloads)
   * open GitBash
   * Navigate to the root folder of the repo
-  * run ./provision64win do create
+  * run `./provision64win do create`
   
 
 Provide Digital Ocean API token that you saved earlier, when prompted.
