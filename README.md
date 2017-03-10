@@ -26,18 +26,7 @@ On Windows:
 Provide Digital Ocean API token that you saved earlier, when prompted.
 
 By default, the provisioner will create 4 VMs: 1 etcd, 1 master, 1 worker and 1 bootstrap node, which we will use to run the lab from.
-At the very end of the provisioning process, we prepare the bootstrap node for you to start the orchestration of the kubernetes cluster. Here is the list of commands that we run for your reference, in case you need to re-run them manually:
-
-```mkdir -p /ket &&
-cd /ket &&
-sudo apt-get update -y &&
-wget --no-check-certificate -O - https://github.com/apprenda/kismatic/releases/download/v1.2.1/kismatic-v1.2.1-linux-amd64.tar.gz | tar -zx && 
-sudo apt-get -y install git build-essential &&
-sudo apt-get install -qq python2.7 && ln -s /usr/bin/python2.7 /usr/bin/python &&
-git clone https://github.com/sashajeltuhin/kubernetes-workshop.git &&
-curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl &&
-chmod +x ./kubectl &&
-sudo mv ./kubectl /usr/local/bin/kubectl```
+At the very end of the provisioning process, we prepare the bootstrap node for you to start the orchestration of the kubernetes cluster. Refer to [this script file] (https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/digitalocean/scripts/bootinit.sh) for the list of commands that we run in the bootstrap node
 
 
 ## Orchestrate Kubernetes  
@@ -92,11 +81,11 @@ To enable external access to the app, create ingress resource:
 You can delete the deployment and redeploy with `--record` flag. This will enable version history.
 Run `kubectl rollout history deployment/<name of deployment>` to view the revisions and reasons for the updates.
 
-To test deployment, open `backend/osrm-ga-api.yaml` and change the last command parameter, which is the url to regional geo data file (pbf). The default is US Georgia. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de)
+To test deployment, open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional geo data file (pbf). The default is US Georgia. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de)
 After you change the file, run
 `kubectl apply -f backend`
 
-Alternatively run
+Alternatively to change deployment and cause the rollout, run:
 `kubectl edit deployment osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
 
