@@ -70,7 +70,7 @@ Now we can communicate with kubernetes:
 The application provided in this repo has 3 components. The lab demonstrates how these components can communicate with each other via **kubernetes services** and how end users can access the application via kubernetes **ingress**.
 ### Overview
 
-![Multi Pod App](https://github.com/sashajeltuhin/kubernetes-workshop/app.png "Multi Pod App")
+![Multi Pod App](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/app.png "Multi Pod App")
 
 To deploy the app, you can run the files individually or by folder.
 Run `cd kubernetes-workshop`
