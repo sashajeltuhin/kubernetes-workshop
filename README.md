@@ -12,8 +12,8 @@ Download this repo:
 
 On Mac:
   * Navigate to the root folder of the repo
-  * chmod 600 ssh/cluster.pem
-  * run ./provision do create
+  * `chmod 600 ssh/cluster.pem`
+  * run `./provision do create`
 
 On Windows:
   * give full permissions to the current user for ssh/cluster.pem writable 
@@ -42,6 +42,7 @@ sudo mv ./kubectl /usr/local/bin/kubectl```
 
 ## Orchestrate Kubernetes  
 After the provisionioning is complete, ssh into the bootstrap node and navigate to folder `/ket`.
+
 Run `chmod 600 kubernetes-workshop/ssh/cluster.pem`
 
 To standup a Kubernetes cluster, we use a set of ansible scripts driven by a plan file. The file is generated for you during the provisioning process.
@@ -54,7 +55,7 @@ It takes about 5 minutes to produce a cluster of this configuration.
 
 ## Start using `kubectl`. During the cluster provisioning we generated a configuration file that is required for us to use **kubectl**. We need to copy it to the location where **kubectl** expects it.
 * run `makedir -p ~/.kube`
-* run `cp generated/kubeconfig ~/.kube/config
+* run `cp generated/kubeconfig ~/.kube/config`
 
 Now we can communicate with kubernetes:
 
@@ -66,24 +67,37 @@ Now we can communicate with kubernetes:
 
 ## Application deployment
 
+The application provided in this repo has 3 components. The lab demonstrates how these components can communicate with each other via **kubernetes services** and how end users can access the application via kubernetes **ingress**.
+### Overview
 
-To change the region, redeploy the osrm-api pod with reference to the corresponding *.pbf file. Refer to
-[GeoFabrik pages](http://download.geofabrik.de/index.html) for the complete list of supported regions
+![Multi Pod App](https://github.com/sashajeltuhin/kubernetes-workshop/app.png "Multi Pod App")
 
-Create backend service:
-kubectl apply -f backend
+To deploy the app, you can run the files individually or by folder.
+Run `cd kubernetes-workshop`
 
-Create api service:
-kubectl apply -f api
+To deploy backend osrm-api component:
+`kubectl apply -f backend`
 
-Create web service:
-kubectl apply -f web
+To deploy geoapi component:
+`kubectl apply -f api`
 
-
-Create ingress resource:
-kubectl apply -f ingress.yaml
+To deploy geoweb component:
+`kubectl apply -f web`
 
 
+To enable external access to the app, create ingress resource:
+`kubectl apply -f ingress.yaml`
+
+
+You can delete the deployment and redeploy with `--record` flag. This will enable version history.
+Run `kubectl rollout history deployment/<name of deployment>` to view the revisions and reasons for the updates.
+
+To test deployment, open `backend/osrm-ga-api.yaml` and change the last command parameter, which is the url to regional geo data file (pbf). The default is US Georgia. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de)
+After you change the file, run
+`kubectl apply -f backend`
+
+Alternatively run
+`kubectl edit deployment osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
 
 Test API:
