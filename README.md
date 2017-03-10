@@ -42,7 +42,8 @@ To standup a Kubernetes cluster, we use a set of ansible scripts driven by a pla
 `./kismatic install apply -f kismatic-cluster.yaml`
 It takes about 5 minutes to produce a cluster of this configuration.
 
-## Start using `kubectl`. During the cluster provisioning we generated a configuration file that is required for us to use **kubectl**. We need to copy it to the location where **kubectl** expects it.
+## Start using `kubectl`. 
+During the cluster provisioning we generated a configuration file that is required for us to use **kubectl**. We need to copy it to the location where **kubectl** expects it.
 * run `makedir -p ~/.kube`
 * run `cp generated/kubeconfig ~/.kube/config`
 
@@ -57,8 +58,8 @@ Now we can communicate with kubernetes:
 ## Application deployment
 
 The application provided in this repo has 3 components. The lab demonstrates how these components can communicate with each other via **kubernetes services** and how end users can access the application via kubernetes **ingress**.
-### Overview
 
+### Overview
 ![Multi Pod App](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/app.png "Multi Pod App")
 
 To deploy the app, you can run the files individually or by folder.
