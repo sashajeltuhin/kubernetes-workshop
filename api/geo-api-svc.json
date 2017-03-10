@@ -10,7 +10,7 @@
       "targetPort": 8099
     }],
     "selector": {
-      "api": "geo-api"
+      "api": "geoapi"
     },
     "type": "NodePort"
   }
