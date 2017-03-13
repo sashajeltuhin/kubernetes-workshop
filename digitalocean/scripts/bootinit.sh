@@ -1,3 +1,4 @@
+#!/bin/bash
 mkdir -p /ket &&
 cd /ket &&
 sudo apt-get update -y &&
