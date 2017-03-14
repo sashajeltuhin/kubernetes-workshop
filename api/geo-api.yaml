@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: geoapi
-        image: sashaz/geoapi:v3
+        image: sashaz/geoapi:v4
         env:
         - name:  'GEO_KEY'
           value:  AIzaSyDZszKJ0a72ED1ragcd0s3Eks3QI2wc6-I

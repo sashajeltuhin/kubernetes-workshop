@@ -16,8 +16,17 @@ On Mac:
   * run `./provision do create`
 
 On Windows:
-  * give full permissions to the current user for ssh/cluster.pem writable 
-  * download GitBash from [here](https://git-scm.com/downloads)
+  * give full permissions to the current user for ssh/cluster.pem
+  * download GitBash using one of 2 options
+    * from [here](https://git-scm.com/downloads)
+    * using powershell as Administrator:
+      * Run `Set-ExecutionPolicy unrestricted`
+      * check version: `$PSVersionTable.PSVersion`
+        * for v2, run: 
+        `$ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
+        * for v3+, run 
+        `$ iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex`
+      * choco install git.install -y
   * open GitBash
   * Navigate to the root folder of the repo
   * run `./provision64win do create`
@@ -62,6 +71,10 @@ The application provided in this repo has 3 components. The lab demonstrates how
 ### Overview
 ![Multi Pod App](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/app.png "Multi Pod App")
 
+* The **geoweb** component is an Angular2 app running on nginx.
+* The **geoapi** component is a NodeJS service that communicates to various external services: Google
+geolocation service and the backend service of this application - **osrm-api**.
+* The **osrm-api** component is a routing engine for OpenStreetMaps project, see [this project] (https://github.com/Project-OSRM/osrm-backend). It is implemented in C++. Among other things, it provides shortest routes between 2+ geographical locations.
 
 ### Deployment
 
@@ -99,7 +112,7 @@ When the deployment is complete from the Kubernetes point of view, the output wi
 ``` 
 	geoapi-662170153-jnv66      1/1       Running   0          1h
 	geoweb-1477820572-r6558     1/1       Running   0          1h
-    osrm-api-3969967481-wcp1q   1/1       Running   0          25m
+	osrm-api-3969967481-wcp1q   1/1       Running   0          25m
 ```
 
 
@@ -116,7 +129,7 @@ You will get an output similar to this:
 
 `geoweb    172.17.30.138   <nodes>       80:31587/TCP   1h`
 
-*31587* is the port on the host that can be used to access the service.
+**31587** is the port on the host that can be used to access the service.
 
 Open your browser and navigate to `http://<Public IP of Worker1>:<NodePort of geoweb service>`
 
@@ -150,8 +163,33 @@ Check the rollout history:
 
 The number of revisions should remain unchanged, as scaling is not considered to be an upgrade.
 
+#### Modify deployment. Lab 1
+To force a new rollout revision, a part of the pod spec has to be changed.
+In this lab we will add environmental variables to the **geoapi** deployment. These variables will
+control some of the text on the web page. Modify the **env** section of the spec in `api/geo-api.yaml` as follows:
 
-#### Modify the deployment. 
+```
+env:
+        - name:  'GEO-KEY'
+          value:  AIzaSyDZszKJ0a72ED1ragcd0s3Eks3QI2wc6-I
+        - name:  'GEO_TITLE'
+          value:  Your preferred page title
+        - name:  'GEO_PLACEHOLDER'
+          value:  Your preferred prompt
+
+```
+
+After you make the change, run
+`kubectl apply -f backend`
+
+
+Alternatively to change deployment and cause the rollout, run:
+`kubectl edit deployment/geo-api`, make the change and save. This will initiate a rollout update for the deployment.
+
+Refresh the browser. Your new labels should appear on the first page of the web app.
+
+
+#### Modify the deployment. Lab 2 
 
 To force a new rollout revision, a part of the pod spec has to be changed. We can for example switch the routing engine to use a different region.
  Open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional
@@ -174,9 +212,10 @@ Alternatively to change deployment and cause the rollout, run:
 
 #### Notes on Readiness 
 
-As soon as the *geoapi* and *geoweb* deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application.
+As soon as the *geoapi* and *geoweb* deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application. For example, the user
+can look up places of interest and see their locations on the map.
 However, the backend component takes a long time to initialize. Depending on the volume of geo data it needs to process, it may take up to 15-20 minutes. 
-The osrm-api pod will appear as Ready, but when the app tries to communicate with the pod, it receives the following error:
+The osrm-api pod will appear as Ready, but when the app tries to communicate with the pod, it receives the following error. This will happen when the user clicks on the Route button to map the shortest way between the selected points.
 
 `500 - Internal Server Error Unable to look up location. Error: connect ECONNREFUSED 172.17.102.229:5000`
 
