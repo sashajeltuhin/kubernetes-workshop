@@ -62,6 +62,9 @@ The application provided in this repo has 3 components. The lab demonstrates how
 ### Overview
 ![Multi Pod App](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/app.png "Multi Pod App")
 
+
+### Deployment
+
 To deploy the app, you can run the files individually or by folder.
 Run `cd kubernetes-workshop`
 
@@ -78,11 +81,79 @@ To deploy geoweb component:
 To enable external access to the app, create ingress resource:
 `kubectl apply -f ingress.yaml`
 
+To check the readiness of the application look up the deployment status or inspect the pods:
+
+`kubectl rollout status deployment/geoweb`
+
+`kubectl get pods`
+
+When the deployment is complete from the Kubernetes point of view, the output will look similar to this:
+
+`kubectl rollout status deployment/geoweb`
+
+```deployment "geoweb" successfully rolled out
+```
+
+`kubectl get pods`
+``` geoapi-662170153-jnv66      1/1       Running   0          1h
+	geoweb-1477820572-r6558     1/1       Running   0          1h
+    osrm-api-3969967481-wcp1q   1/1       Running   0          25m
+```
+
 
 You can delete the deployment and redeploy with `--record` flag. This will enable version history.
 Run `kubectl rollout history deployment/<name of deployment>` to view the revisions and reasons for the updates.
 
-To test deployment, open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional geo data file (pbf). The current image points to Florida. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de).
+####Accessing the deployed application
+You can access the app using the NodePort of the service.
+Look up the geoweb service:
+
+`kubectl get svc geoweb`
+
+You will get an output similar to this:
+
+`geoweb    172.17.30.138   <nodes>       80:31587/TCP   1h`
+
+*31587* is the port on the host that can be used to access the service.
+
+Open your browser and navigate to `http://<Public IP of Worker1>:<NodePort of geoweb service>`
+
+
+
+Alternatively, you can use a more user-friendly method - *ingress*.
+
+Add record to /etc/hosts:
+`<Public IP of worker1>	  myk8sworkshop.com`
+Open the browser, navigate to http://myk8sworkshop.com
+
+
+####Scale the deployment
+
+To scale a deployment you can use at least 2 following options.
+
+Let's increase the number of *geoweb* pods
+
+`kubectl scale deployments geoweb --replicas 2`
+
+Alternatively you can change the deployment yaml file:
+
+`kubectl edit deployment/geoweb`, which will open the yaml of the pod in the preferred editor. After saving the changes, the deployment will be automatically updated.
+To invoke the preferred editor, you can change the default setting like this:
+
+`KUBE_EDITOR="nano" kubectl edit deployment/geoweb`
+
+Check the rollout history:
+
+`kubectl rollout history deployment/geoweb`
+
+The number of revisions should remain unchanged, as scaling is not considered to be an upgrade.
+
+
+####Modify the deployment. 
+
+To force a new rollout revision, a part of the pod spec has to be changed. We can for example switch the routing engine to use a different region.
+ Open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional
+geo data file (pbf). The current image points to Florida. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de).
 Some examples:
 
 `Georgia: "http://download.geofabrik.de/north-america/us/georgia-latest.osm.pbf"`
@@ -99,10 +170,44 @@ After you change the file, run
 Alternatively to change deployment and cause the rollout, run:
 `kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
-####Test website
-Add record to /etc/hosts:
+####Notes on Readiness 
 
-`<Public IP of worker1>	  myk8sworkshop.com`
+As soon as the geoapi and geoweb deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application.
+However, the backend component takes a long time to initialize. Depending on the volume of geo data it needs to process, it may take up to 15-20 minutes. 
+The osrm-api pod will appear as Ready, but when the app tries to communicate with the pod, it receives the following error:
+
+`500 - Internal Server Error Unable to look up location. Error: connect ECONNREFUSED 172.17.102.229:5000`
+
+We can use the *ReadinessProbe* section of the pod spec to help Kubernetes understand when the pod is actually ready to receive traffic.
+In our case the probe will be defined as follows:
+
+```      readinessProbe:
+          httpGet:
+            path: /route/v1/driving/-82.6609185%2C27.8859695%3B-82.5370781%2C27.9834776?steps=true
+            port: 5000
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+```
+
+Edit the osrm-api deployment and add the ReadinessProbe block under the name property of the container:
+
+`kubectl edit deployment/osrm-api`
+
+```
+      containers:
+      - name: osrm-api
+        readinessProbe:
+          httpGet:
+            path: /route/v1/driving/-82.6609185%2C27.8859695%3B-82.5370781%2C27.9834776?steps=true
+            port: 5000
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+```
 
 
-Open the browser, navigate to http://myk8sworkshop.com
+Now, until the osrm-api initialization is truly complete, the pod will show the Not-Ready state, the deployment will show as incomplete and any attempts to reach the service will result in a different error, not an internal crash.
+
+`500 - Internal Server Error Unable to look up location. Error: connect EHOSTUNREACH 172.17.102.229:5000`
+
+
+

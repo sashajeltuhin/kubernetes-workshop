@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: osrm-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        api: osrm-api
+    spec:
+      containers:
+      - name: osrm-api
+        readinessProbe:
+          httpGet:
+            path: /route/v1/driving/-82.6609185%2C27.8859695%3B-82.5370781%2C27.9834776?steps=true
+            port: 5000
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+        image: cartography/osrm-backend-docker:latest
+        ports:
+        - containerPort: 5000
+        args:
+        - osrm
+        - label
+        - "http://download.geofabrik.de/north-america/us/florida-latest.osm.pbf"
