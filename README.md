@@ -210,7 +210,7 @@ After you change the file, run
 Alternatively to change deployment and cause the rollout, run:
 `kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
-#### Notes on Readiness 
+#### Is My Pod Ready? 
 
 As soon as the *geoapi* and *geoweb* deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application. For example, the user
 can look up places of interest and see their locations on the map.
