@@ -91,11 +91,13 @@ When the deployment is complete from the Kubernetes point of view, the output wi
 
 `kubectl rollout status deployment/geoweb`
 
-```deployment "geoweb" successfully rolled out
+```
+	deployment "geoweb" successfully rolled out
 ```
 
 `kubectl get pods`
-``` geoapi-662170153-jnv66      1/1       Running   0          1h
+``` 
+	geoapi-662170153-jnv66      1/1       Running   0          1h
 	geoweb-1477820572-r6558     1/1       Running   0          1h
     osrm-api-3969967481-wcp1q   1/1       Running   0          25m
 ```
@@ -104,7 +106,7 @@ When the deployment is complete from the Kubernetes point of view, the output wi
 You can delete the deployment and redeploy with `--record` flag. This will enable version history.
 Run `kubectl rollout history deployment/<name of deployment>` to view the revisions and reasons for the updates.
 
-####Accessing the deployed application
+#### Accessing the deployed application
 You can access the app using the NodePort of the service.
 Look up the geoweb service:
 
@@ -127,7 +129,7 @@ Add record to /etc/hosts:
 Open the browser, navigate to http://myk8sworkshop.com
 
 
-####Scale the deployment
+#### Scale the deployment
 
 To scale a deployment you can use at least 2 following options.
 
@@ -149,7 +151,7 @@ Check the rollout history:
 The number of revisions should remain unchanged, as scaling is not considered to be an upgrade.
 
 
-####Modify the deployment. 
+#### Modify the deployment. 
 
 To force a new rollout revision, a part of the pod spec has to be changed. We can for example switch the routing engine to use a different region.
  Open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional
@@ -170,7 +172,7 @@ After you change the file, run
 Alternatively to change deployment and cause the rollout, run:
 `kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
-####Notes on Readiness 
+#### Notes on Readiness 
 
 As soon as the geoapi and geoweb deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application.
 However, the backend component takes a long time to initialize. Depending on the volume of geo data it needs to process, it may take up to 15-20 minutes. 
@@ -181,7 +183,8 @@ The osrm-api pod will appear as Ready, but when the app tries to communicate wit
 We can use the *ReadinessProbe* section of the pod spec to help Kubernetes understand when the pod is actually ready to receive traffic.
 In our case the probe will be defined as follows:
 
-```      readinessProbe:
+``` 
+        readinessProbe:
           httpGet:
             path: /route/v1/driving/-82.6609185%2C27.8859695%3B-82.5370781%2C27.9834776?steps=true
             port: 5000
