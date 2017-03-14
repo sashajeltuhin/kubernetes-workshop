@@ -74,7 +74,7 @@ The application provided in this repo has 3 components. The lab demonstrates how
 * The **geoweb** component is an Angular2 app running on nginx.
 * The **geoapi** component is a NodeJS service that communicates to various external services: Google
 geolocation service and the backend service of this application - **osrm-api**.
-* The **osrm-api** component is a routing engine for OpenStreetMaps project, see [this project] (https://github.com/Project-OSRM/osrm-backend). It is implemented in C++. Among other things, it provides shortest routes between 2+ geographical locations.
+* The **osrm-api** component is a routing engine for OpenStreetMaps project, see [this project](https://github.com/Project-OSRM/osrm-backend). It is implemented in C++. Among other things, it provides shortest routes between 2+ geographical locations.
 
 ### Deployment
 
