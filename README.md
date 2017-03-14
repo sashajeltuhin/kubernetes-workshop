@@ -84,18 +84,25 @@ Run `kubectl rollout history deployment/<name of deployment>` to view the revisi
 
 To test deployment, open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional geo data file (pbf). The current image points to Florida. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de).
 Some examples:
+
 `Georgia: "http://download.geofabrik.de/north-america/us/georgia-latest.osm.pbf"`
+
 `Berlin: "http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf" `
+
 `Florida: "http://download.geofabrik.de/north-america/us/florida-latest.osm.pbf"`
+
 
 After you change the file, run
 `kubectl apply -f backend`
 
+
 Alternatively to change deployment and cause the rollout, run:
 `kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
-Test website:
+####Test website
 Add record to /etc/hosts:
+
 `<Public IP of worker1>	  myk8sworkshop.com`
+
 
 Open the browser, navigate to http://myk8sworkshop.com
