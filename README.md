@@ -1,6 +1,6 @@
 # Kubernetes Workshop
 
-We run this lab on Digital Ocean. If you do not have an account with Digital Ocean, go to [this page] (https://www.digitalocean.com) and click on Create Account at the bottom of the screen. During the process, you will be prompted to
+We run this lab on Digital Ocean. If you do not have an account with Digital Ocean, go to [this page](https://www.digitalocean.com) and click on Create Account at the bottom of the screen. During the process, you will be prompted to
 provide a credit card. Do not worry, the lab will not cost you a penny. Digital Ocean offers a $10 credit to the new users.
 This amount is more than sufficient for this lab and beyond. Make sure you pick the account without any resource limitations.
 After you opened the account click on the API tab and generate a new access token. Save the token string in a local file for future use: you will need it a couple of times during the lab.
@@ -35,7 +35,7 @@ On Windows:
 Provide Digital Ocean API token that you saved earlier, when prompted.
 
 By default, the provisioner will create 4 VMs: 1 etcd, 1 master, 1 worker and 1 bootstrap node, which we will use to run the lab from.
-At the very end of the provisioning process, we prepare the bootstrap node for you to start the orchestration of the kubernetes cluster. Refer to [this script file] (https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/digitalocean/scripts/bootinit.sh) for the list of commands that we run in the bootstrap node
+At the very end of the provisioning process, we prepare the bootstrap node for you to start the orchestration of the kubernetes cluster. Refer to [this script file](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/digitalocean/scripts/bootinit.sh) for the list of commands that we run in the bootstrap node
 
 
 ## Orchestrate Kubernetes  
@@ -163,7 +163,7 @@ Check the rollout history:
 
 The number of revisions should remain unchanged, as scaling is not considered to be an upgrade.
 
-#### Modify deployment. Lab 1
+#### Modify the deployment. Lab 1
 To force a new rollout revision, a part of the pod spec has to be changed.
 In this lab we will add environmental variables to the **geoapi** deployment. These variables will
 control some of the text on the web page. Modify the **env** section of the spec in `api/geo-api.yaml` as follows:
@@ -180,7 +180,7 @@ env:
 ```
 
 After you make the change, run
-`kubectl apply -f backend`
+`kubectl apply -f geoapi`
 
 
 Alternatively to change deployment and cause the rollout, run:
@@ -193,7 +193,7 @@ Refresh the browser. Your new labels should appear on the first page of the web 
 
 To force a new rollout revision, a part of the pod spec has to be changed. We can for example switch the routing engine to use a different region.
  Open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional
-geo data file (pbf). The current image points to Florida. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de).
+geo data file (pbf). The current image points to Florida. You can locate URLs to other desired regions at [GeoFabrik site](http://download.geofabrik.de).
 Some examples:
 
 `Georgia: "http://download.geofabrik.de/north-america/us/georgia-latest.osm.pbf"`
