@@ -82,20 +82,20 @@ To enable external access to the app, create ingress resource:
 You can delete the deployment and redeploy with `--record` flag. This will enable version history.
 Run `kubectl rollout history deployment/<name of deployment>` to view the revisions and reasons for the updates.
 
-To test deployment, open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional geo data file (pbf). The default is US Georgia. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de)
+To test deployment, open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional geo data file (pbf). The current image points to Florida. You can locate URLs to other desired regions at [GeoFabrik site] (http://download.geofabrik.de).
+Some examples:
+`Georgia: "http://download.geofabrik.de/north-america/us/georgia-latest.osm.pbf"`
+`Berlin: "http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf" `
+`Florida: "http://download.geofabrik.de/north-america/us/florida-latest.osm.pbf"`
+
 After you change the file, run
 `kubectl apply -f backend`
 
 Alternatively to change deployment and cause the rollout, run:
-`kubectl edit deployment osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
-
-
-Test API:
-curl <Ip of worker1>:<NodePort of geo-api-svc>/api/testMap/32.983312,-84.343748%3B33.983311,-84.333732
-
+`kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
 Test website:
 Add record to /etc/hosts:
-<Ip of worker1>	myk8sworkshop.com
+`<Public IP of worker1>	  myk8sworkshop.com`
 
 Open the browser, navigate to http://myk8sworkshop.com
