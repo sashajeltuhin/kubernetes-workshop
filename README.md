@@ -174,7 +174,7 @@ Alternatively to change deployment and cause the rollout, run:
 
 #### Notes on Readiness 
 
-As soon as the geoapi and geoweb deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application.
+As soon as the *geoapi* and *geoweb* deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application.
 However, the backend component takes a long time to initialize. Depending on the volume of geo data it needs to process, it may take up to 15-20 minutes. 
 The osrm-api pod will appear as Ready, but when the app tries to communicate with the pod, it receives the following error:
 
