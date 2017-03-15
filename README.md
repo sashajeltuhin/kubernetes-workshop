@@ -7,13 +7,13 @@ After you opened the account click on the API tab and generate a new access toke
 
 ## Provisioning and prep work
 
-Make sure you have Git installed.
+####Make sure you have Git installed.
 
-On Mac, type `git --version`
+On **Mac**, type `git --version`
 If Git is not installed, follow prompts to download command line tools or
 install from [here](https://git-scm.com/downloads)
 
-On Windows:
+On **Windows**:
  * download GitBash using one of 2 options
  * from [here](https://git-scm.com/downloads)
  * using Powershell as Administrator:
@@ -25,21 +25,21 @@ On Windows:
         `iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex`
    * `choco install git.install -y`
 
-Download this repo:
+####Download this repo:
 ```git clone https://github.com/apprenda/kubernetes-workshop.git```
 
-On Mac:
+On **Mac**:
   * Navigate to the root folder of the repo: `cd kubernetes-workshop`
   * `chmod 600 ssh/cluster.pem`
   * run `./provision do create`
 
-On Windows:
+On **Windows**:
   * open GitBash
   * Navigate to the root folder of the repo: `cd kubernetes-workshop`
   * run `./provision64win do create`
   
 
-Provide Digital Ocean API token that you saved earlier, when prompted.
+####Provide Digital Ocean API token that you saved earlier, when prompted.
 
 By default, the provisioner will create 4 VMs: 1 etcd, 1 master, 1 worker and 1 bootstrap node, which we will use to run the lab from.
 At the very end of the provisioning process, we prepare the bootstrap node for you to start the orchestration of the kubernetes cluster. Refer to [this script file](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/digitalocean/scripts/bootinit.sh) for the list of commands that we run in the bootstrap node
