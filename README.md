@@ -55,7 +55,7 @@ To standup a Kubernetes cluster, we use a set of ansible scripts driven by a pla
 * Inspect the generated content and change the path to the ssh file to `/ket/kubernetes-workshop/ssh/cluster.pem`
 * Save and close the plan file
 * Run the following command:
-`./kismatic install apply -f kismatic-cluster.yaml`
+`./kismatic install apply -f kismatic-cluster.yaml`.
 It takes about 5 minutes to produce a cluster of this configuration.
 
 ## Start using `kubectl`. 
@@ -190,7 +190,7 @@ After you make the change, run
 `kubectl apply -f geoapi`
 
 
-Alternatively to change deployment and cause the rollout, run:
+Alternatively, to change the deployment and cause the rollout, run:
 `kubectl edit deployment/geo-api`, make the change and save. This will initiate a rollout update for the deployment.
 
 Refresh the browser. Your new labels should appear on the first page of the web app.
@@ -198,10 +198,10 @@ Refresh the browser. Your new labels should appear on the first page of the web 
 
 #### Is My Pod Ready? 
 
-As soon as the *geoapi* and *geoweb* deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application. For example, the user
+As soon as the **geoapi** and **geoweb** deployments are declared by Kuberenetes as **Ready**, it becomes possible for end users to interact with some parts of the deployed application. For example, the user
 can look up places of interest and see their locations on the map.
-However, the backend component takes a long time to initialize. Depending on the volume of geo data it needs to process, it may take up to 15-20 minutes. 
-The osrm-api pod will appear as Ready, but when the app tries to communicate with the pod, it receives the following error. This will happen when the user clicks on the Route button to map the shortest way between the selected points.
+However, the backend **osrm-api** component takes a long time to initialize. Depending on the volume of geo data it needs to process, it may take up to 15-30 minutes. 
+The osrm-api pod will appear as Ready, but when the app tries to communicate with the pod, it receives the error below. This will happen when the user clicks on the Route button to map the shortest way between the selected points.
 
 `500 - Internal Server Error Unable to look up location. Error: connect ECONNREFUSED 172.17.102.229:5000`
 
@@ -233,7 +233,7 @@ Edit the osrm-api deployment and add the ReadinessProbe block under the name pro
 ```
 
 
-Now, until the osrm-api initialization is truly complete, the pod will show the Not-Ready state, the deployment will show as incomplete and any attempts to reach the service will result in a different error, not an internal crash.
+Now, until the osrm-api initialization is truly complete, the pod will show the Not-Ready state, the deployment will stay incomplete and any attempts to reach the service will result in a different error, not an internal crash.
 
 `500 - Internal Server Error Unable to look up location. Error: connect EHOSTUNREACH 172.17.102.229:5000`
 
