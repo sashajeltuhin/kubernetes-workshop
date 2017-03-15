@@ -19,7 +19,7 @@ On Windows:
   * give full permissions to the current user for ssh/cluster.pem
   * download GitBash using one of 2 options
     * from [here](https://git-scm.com/downloads)
-    * using powershell as Administrator:
+    * using Powershell as Administrator:
       * Run `Set-ExecutionPolicy unrestricted`
       * check version: `$PSVersionTable.PSVersion`
         * for v2, run: 
@@ -189,27 +189,6 @@ Alternatively to change deployment and cause the rollout, run:
 Refresh the browser. Your new labels should appear on the first page of the web app.
 
 
-#### Modify the deployment. Lab 2 
-
-To force a new rollout revision, a part of the pod spec has to be changed. We can for example switch the routing engine to use a different region.
- Open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional
-geo data file (pbf). The current image points to Florida. You can locate URLs to other desired regions at [GeoFabrik site](http://download.geofabrik.de).
-Some examples:
-
-`Georgia: "http://download.geofabrik.de/north-america/us/georgia-latest.osm.pbf"`
-
-`Berlin: "http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf" `
-
-`Florida: "http://download.geofabrik.de/north-america/us/florida-latest.osm.pbf"`
-
-
-After you change the file, run
-`kubectl apply -f backend`
-
-
-Alternatively to change deployment and cause the rollout, run:
-`kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
-
 #### Is My Pod Ready? 
 
 As soon as the *geoapi* and *geoweb* deployments are declared by Kuberenetes as *Ready*, it becomes possible for end users to interact with some parts of the deployed application. For example, the user
@@ -251,5 +230,27 @@ Now, until the osrm-api initialization is truly complete, the pod will show the 
 
 `500 - Internal Server Error Unable to look up location. Error: connect EHOSTUNREACH 172.17.102.229:5000`
 
+
+
+#### Modify the deployment. Lab 2 
+
+To force a new rollout revision, a part of the pod spec has to be changed. We can for example switch the routing engine to use a different region.
+ Open `backend/osrm-api.yaml` and change the last command parameter, which is the url to regional
+geo data file (pbf). The current image points to Florida. You can locate URLs to other desired regions at [GeoFabrik site](http://download.geofabrik.de).
+Some examples:
+
+`Georgia: "http://download.geofabrik.de/north-america/us/georgia-latest.osm.pbf"`
+
+`Berlin: "http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf" `
+
+`Florida: "http://download.geofabrik.de/north-america/us/florida-latest.osm.pbf"`
+
+
+After you change the file, run
+`kubectl apply -f backend`
+
+
+Alternatively to change deployment and cause the rollout, run:
+`kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
 
