@@ -191,11 +191,11 @@ env:
 ```
 
 After you make the change, run
-`kubectl apply -f geoapi`
+`kubectl apply -f api/geo-api.yaml`
 
 
 Alternatively, to change the deployment and cause the rollout, run:
-`kubectl edit deployment/geo-api`, make the change and save. This will initiate a rollout update for the deployment.
+`kubectl edit deployment/geoapi`, make the change and save. This will initiate a rollout update for the deployment.
 
 Refresh the browser. Your new labels should appear on the first page of the web app.
 
