@@ -7,17 +7,14 @@ After you opened the account click on the API tab and generate a new access toke
 
 ## Provisioning and prep work
 
-Download this repo:
-```git clone https://github.com/apprenda/kubernetes-workshop.git```
+Make sure you have Git installed.
 
-On Mac:
-  * Navigate to the root folder of the repo
-  * `chmod 600 ssh/cluster.pem`
-  * run `./provision do create`
+On Mac, type `git --version`
+If Git is not installed, follow prompts to download command line tools or
+install from [here](https://git-scm.com/downloads)
 
 On Windows:
-  * give full permissions to the current user for ssh/cluster.pem
-  * download GitBash using one of 2 options
+    * download GitBash using one of 2 options
     * from [here](https://git-scm.com/downloads)
     * using Powershell as Administrator:
       * Run `Set-ExecutionPolicy unrestricted`
@@ -26,9 +23,19 @@ On Windows:
         `$ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
         * for v3+, run 
         `$ iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex`
-      * choco install git.install -y
+      * `choco install git.install -y`
+
+Download this repo:
+```git clone https://github.com/apprenda/kubernetes-workshop.git```
+
+On Mac:
+  * Navigate to the root folder of the repo: `cd kubernetes-workshop`
+  * `chmod 600 ssh/cluster.pem`
+  * run `./provision do create`
+
+On Windows:
   * open GitBash
-  * Navigate to the root folder of the repo
+  * Navigate to the root folder of the repo: `cd kubernetes-workshop`
   * run `./provision64win do create`
   
 
@@ -53,7 +60,7 @@ It takes about 5 minutes to produce a cluster of this configuration.
 
 ## Start using `kubectl`. 
 During the cluster provisioning we generated a configuration file that is required for us to use **kubectl**. We need to copy it to the location where **kubectl** expects it.
-* run `makedir -p ~/.kube`
+* run `mkdir -p ~/.kube`
 * run `cp generated/kubeconfig ~/.kube/config`
 
 Now we can communicate with kubernetes:
