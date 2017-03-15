@@ -17,11 +17,11 @@ On Windows:
  * download GitBash using one of 2 options
  * from [here](https://git-scm.com/downloads)
  * using Powershell as Administrator:
- * Run `Set-ExecutionPolicy unrestricted`
- * check version: `$PSVersionTable.PSVersion`
-   * for v2, run: 
+   * Run `Set-ExecutionPolicy unrestricted`
+   * check version: `$PSVersionTable.PSVersion`
+     * for v2, run: 
         `$ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
-        * for v3+, run 
+     * for v3+, run 
         `$ iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex`
    * `choco install git.install -y`
 
