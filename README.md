@@ -8,7 +8,7 @@ After you opened the account click on the API tab and generate a new access toke
 ## Provisioning and prep work
 
 Download this repo:
-```git clone https://github.com/sashajeltuhin/kubernetes-workshop.git```
+```git clone https://github.com/apprenda/kubernetes-workshop.git```
 
 On Mac:
   * Navigate to the root folder of the repo
