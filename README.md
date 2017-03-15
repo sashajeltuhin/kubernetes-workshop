@@ -45,10 +45,14 @@ By default, the provisioner will create 4 VMs: 1 etcd, 1 master, 1 worker and 1 
 At the very end of the provisioning process, we prepare the bootstrap node for you to start the orchestration of the kubernetes cluster. Refer to [this script file](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/digitalocean/scripts/bootinit.sh) for the list of commands that we run in the bootstrap node
 
 
-## Orchestrate Kubernetes  
-After the provisionioning is complete, ssh into the bootstrap node and navigate to folder `/ket`.
+## Orchestrate Kubernetes
+* SSH into the newly orchestrated bootstrap VM:
+`ssh -i ssh/cluster.pem root@<Public IP of the bootstrap node>`
 
-Run `chmod 600 kubernetes-workshop/ssh/cluster.pem`
+* Navigate to folder `/ket`:
+`cd /ket`
+
+* Run `chmod 600 kubernetes-workshop/ssh/cluster.pem`
 
 To standup a Kubernetes cluster, we use a set of ansible scripts driven by a plan file. The file is generated for you during the provisioning process.
 * Open `/ket/kismatic-cluster.yaml` for editing.
