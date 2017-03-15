@@ -20,9 +20,9 @@ On Windows:
    * Run `Set-ExecutionPolicy unrestricted`
    * check version: `$PSVersionTable.PSVersion`
      * for v2, run: 
-        `$ iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
+        `iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
      * for v3+, run 
-        `$ iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex`
+        `iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex`
    * `choco install git.install -y`
 
 Download this repo:
