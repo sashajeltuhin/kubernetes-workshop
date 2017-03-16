@@ -265,3 +265,16 @@ Alternatively to change deployment and cause the rollout, run:
 `kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
 
+## Clean-up
+
+To remove the VMs orchestrated for the cluster on Digital Ocean run the following command from the root directory of the kubernetes-workshop repo:
+**Mac**
+
+`./provision do delete-all`
+
+
+**Windows**
+
+`./provision64win do delete-all`
+
+
