@@ -267,7 +267,8 @@ Alternatively to change deployment and cause the rollout, run:
 
 ## Clean-up
 
-To remove the VMs orchestrated for the cluster on Digital Ocean run the following command from the root directory of the kubernetes-workshop repo:
+To remove the VMs orchestrated for the cluster on Digital Ocean, run the following command from the root directory of the kubernetes-workshop repo:
+
 **Mac**
 
 `./provision do delete-all`
