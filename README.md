@@ -1,11 +1,19 @@
 # Kubernetes Workshop
 
 We run this lab on Digital Ocean. If you do not have an account with Digital Ocean, go to [this page](https://www.digitalocean.com) and click on Create Account at the bottom of the screen. During the process, you will be prompted to
-provide a credit card. Do not worry, the lab will not cost you a penny. Digital Ocean offers a $10 credit to the new users.
+provide a credit card. 
+
+Do not worry, the lab will not cost you a penny. Digital Ocean offers a $10 credit to the new users.
 This amount is more than sufficient for this lab and beyond. Make sure you pick the account without any resource limitations.
-After you opened the account click on the API tab and generate a new access token. Save the token string in a local file for future use: you will need it a couple of times during the lab.
 
 ## Provisioning and prep work
+
+### Obtain an API access token from Digital Ocean
+* Access the Digital Ocean control panel
+* Select the API tab
+* Under the "Tokens" tab, click on "Generate New Token"
+* Give it a name. Anything works, or use "Kube Workshop"
+* Save the token in a local file, as we will need it during the lab
 
 #### Make sure you have Git installed.
 
