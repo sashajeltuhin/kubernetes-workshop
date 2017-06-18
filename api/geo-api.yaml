@@ -11,10 +11,12 @@ spec:
     spec:
       containers:
       - name: geoapi
-        image: sashaz/geoapi:v4
+        image: sashaz/geoapi:v5
         env:
         - name:  'GEO_KEY'
-          value:  AIzaSyDZszKJ0a72ED1ragcd0s3Eks3QI2wc6-I
+          value:  AIzaSyDr3iN4ZiOdk_X3t8Wx1s_Y6rvqxQUnsWI
+        - name:  'GEO_DIR_KEY'
+          value:  AIzaSyDp7yLyid5qJOIgQo1d_gt11NBBGCJivFA
         ports:
         - containerPort: 8099
         args:

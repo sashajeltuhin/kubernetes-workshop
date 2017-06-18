@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: geoweb
-        image: sashaz/geoweb:v3
+        image: sashaz/geoweb:v5
         ports:
         - containerPort: 80
