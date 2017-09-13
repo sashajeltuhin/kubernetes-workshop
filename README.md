@@ -45,12 +45,22 @@ On **Windows**:
   * open GitBash
   * Navigate to the root folder of the repo: `cd kubernetes-workshop`
   * run `./provision64win do create`
+
+On **Linux**:
+  * Navigate to the root folder of the repo: `cd kubernetes-workshop`
+  * run one of the following commands depending on the OS:
+    ** `./provision64linux do create`
+    ** `./provision32linux do create`
+    ** `./provisionARMlinux do create`
   
 
 #### Provide Digital Ocean API token that you saved earlier, when prompted.
 
 By default, the provisioner will create 4 VMs: 1 etcd, 1 master, 1 worker and 1 bootstrap node, which we will use to run the lab from.
 At the very end of the provisioning process, we prepare the bootstrap node for you to start the orchestration of the kubernetes cluster. Refer to [this script file](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/digitalocean/scripts/bootinit.sh) for the list of commands that we run in the bootstrap node
+
+### Lab Topology
+![Multi Pod App](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/labtopo.png "Kubernetes Workshop Lab Topology")
 
 
 ## Orchestrate Kubernetes
@@ -83,9 +93,23 @@ Now we can communicate with kubernetes:
 * Inspect the nodes
 `kubectl get nodes`
 
-## Application deployment
+## Application Deployment. Single Component
+The first application in this lab is deployed to the cluster in a single pod. The app has a user interface implemented in Angular2 and a service powered by a nodejs server.
 
-The application provided in this repo has 3 components. The lab demonstrates how these components can communicate with each other via **kubernetes services** and how end users can access the application via kubernetes **ingress**.
+### Deployment
+
+The kubernetes specs for the app are located in single_component folder of the workshop. The folder conains 2 yaml files:
+  * `apppub.yaml` - the pod spec with the reference to container images, etc.
+  * `appsvc.yaml` - the spec of the service that will be created to access replicas of the pod.
+To deploy:
+* Run `cd kubernetes-workshop`
+* Deploy the pod and the service at the same time by referencing the location folder: `kubectl apply -f single_component`
+
+
+
+## Application Deployment. Multiple Components
+
+Another application provided in this repo has 3 components. Unlike the first app, these components are packaged and deployed independently. The lab demonstrates how these components can communicate with each other via **kubernetes services** and how end users can access the application via kubernetes **ingress**.
 
 ### Overview
 ![Multi Pod App](https://github.com/sashajeltuhin/kubernetes-workshop/blob/master/app.png "Multi Pod App")
@@ -272,6 +296,16 @@ After you change the file, run
 Alternatively to change deployment and cause the rollout, run:
 `kubectl edit deployment/osrm-api`, make the change to the command parameter and save. This will initiate a rollout update for the deployment.
 
+## Extra Stuff
+The cluster is installed with several Kubernetes add-ons that are useful for cluster management.
+  ### Dashboard - provides visualization of cluster entities and stats. To access the dashboard of the cluster navigate to https://<master-ip>:6443/ui. When prompted use admin credentials to login. Tip: admin credentials can be found in the generated kismatic-cluster.yaml plan file.
+
+  ### Helm - kubernetes "package" manager. Helm is pre-installed by Kismatic. 
+  # Run ./helm update to refresh the list of packages. 
+  # Run ./helm search <optional keyword> to get the list of available packages
+  # Run ./helm install <package_name> to orchestrate package in the cluster.
+
+  ### Heapster - monitoring tool for tracking performance stats on pods running across the cluster. It is typically bundled with a database (e.g. InfluxDB) and a visualization tool (e.g. Graphana). By default, the performance stats for nodes and pods show up in the Dashboard.
 
 ## Clean-up
 

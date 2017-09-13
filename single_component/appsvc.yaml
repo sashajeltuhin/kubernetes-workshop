@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: acppub
+spec:
+  selector:
+    app: acppub
+  ports:
+  - protocol: TCP
+    port: 8077
+    targetPort: 8099
+  type: NodePort

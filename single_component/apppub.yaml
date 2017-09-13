@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: acppub
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: acppub
+    spec:
+      containers:
+      - name: acpsec
+        image: docker.io/sashaz/acpsec:v10
+        env:
+        - name: GEO_KEY
+          value: AIzaSyDr3iN4ZiOdk_X3t8Wx1s_Y6rvqxQUnsWI
+        - name: GEO_DIR_KEY
+          value: AIzaSyDp7yLyid5qJOIgQo1d_gt11NBBGCJivFA
+        - name: GEO_APP_TITLE
+          value: 'Public Banking on HX'
+        - name: GEO_TITLE
+          value: 'Powered by '
+        - name: GEO_PLACEHOLDER
+          value: 'Enter Branch Name... '
+        - name: CASH_LIMIT
+          value: '1500'
+        ports:
+        - containerPort: 8077
+        args:
+        - node
+        - server.js
