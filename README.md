@@ -298,14 +298,14 @@ Alternatively to change deployment and cause the rollout, run:
 
 ## Extra Stuff
 The cluster is installed with several Kubernetes add-ons that are useful for cluster management.
-  * Dashboard - provides visualization of cluster entities and stats. To access the dashboard of the cluster navigate to https://<master-ip>:6443/ui. When prompted, use admin credentials to login. Tip: admin credentials can be found in the generated kismatic-cluster.yaml plan file.
+  * **Dashboard** - provides visualization of cluster entities and stats. To access the dashboard of the cluster navigate to https://<master-ip>:6443/ui. When prompted, use admin credentials to login. Tip: admin credentials can be found in the generated kismatic-cluster.yaml plan file.
 
-  * Helm - kubernetes "package" manager. Helm is pre-installed by Kismatic. 
+  * **Helm** - kubernetes "package" manager. Helm is pre-installed by Kismatic. 
     * Run ./helm update to refresh the list of packages. 
     * Run ./helm search <optional keyword> to get the list of available packages
     * Run ./helm install <package_name> to orchestrate package in the cluster.
 
-  * Heapster - monitoring tool for tracking performance stats on pods running across the cluster. It is typically bundled with a database (e.g. InfluxDB) and a visualization tool (e.g. Graphana). By default, the performance stats for nodes and pods show up in the Dashboard.
+  * **Heapster** - monitoring tool for tracking performance stats on pods running across the cluster. It is typically bundled with a database (e.g. InfluxDB) and a visualization tool (e.g. Graphana). By default, the performance stats for nodes and pods show up in the Dashboard.
 
 ## Clean-up
 
