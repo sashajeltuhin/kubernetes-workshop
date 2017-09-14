@@ -8,5 +8,5 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: geoweb
+          serviceName: acppub
           servicePort: 80
